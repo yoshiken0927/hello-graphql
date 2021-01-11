@@ -39,6 +39,25 @@ var todoQuery = graphql.NewObject(graphql.ObjectConfig{
 				}, nil
 			},
 		},
+		"todo": &graphql.Field{
+			Type: todoType,
+			Args: graphql.FieldConfigArgument{
+				"id": &graphql.ArgumentConfig{
+					Type: graphql.Int,
+				},
+			},
+			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
+				id, isOK := params.Args["id"]
+				if isOK {
+					return []Todo{
+						Todo{ID: "a", Text: "A todo not to forget", Done: false},
+						Todo{ID: "b", Text: "the most important", Done: false},
+						Todo{ID: "c", Text: "Please do this or else", Done: false},
+					}[id.(int)], nil
+				}
+				return Todo{}, nil
+			},
+		},
 	},
 })
 
