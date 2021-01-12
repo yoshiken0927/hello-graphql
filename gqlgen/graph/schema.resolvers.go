@@ -7,6 +7,7 @@ import (
 	"context"
 	"gqlgen/graph/generated"
 	"gqlgen/graph/model"
+	"log"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
@@ -22,20 +23,22 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 }
 
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+	log.Printf("processing queryResolver#Todos...")
 	return []*model.Todo{
 		&model.Todo{
 			ID:   "todo001",
 			Text: "部屋の掃除",
 			Done: false,
 			User: &model.User{
-				ID:   "user001",
-				Name: "たろー",
+				ID:   "user002",
+				Name: "じろー",
 			},
 		},
 	}, nil
 }
 
 func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
+	log.Printf("processing todoResolver#User...%v", obj.User.ID)
 	return &model.User{
 		ID:   "user001",
 		Name: "たろー2",
