@@ -30,18 +30,17 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 			Text: "部屋の掃除",
 			Done: false,
 			User: &model.User{
-				ID:   "user002",
-				Name: "じろー",
+				ID: "user001",
 			},
 		},
 	}, nil
 }
 
 func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
-	log.Printf("processing todoResolver#User...%v", obj.User.ID)
+	log.Printf("processing todoResolver#User...")
 	return &model.User{
-		ID:   "user001",
-		Name: "たろー2",
+		ID:   obj.User.ID,
+		Name: "ユーザー" + obj.User.ID,
 	}, nil
 }
 
